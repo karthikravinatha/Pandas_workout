@@ -52,3 +52,12 @@ print(e)
 
 f = df1.groupby('quality').std()
 print(f)
+
+df1 = df1.eval('total = sulphates + alcohol')
+print(df1)
+
+df1 = df1.drop(columns='total',axis=True)
+print(df1)
+
+
+
