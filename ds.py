@@ -33,9 +33,9 @@ no_users = len(user)
 avg_connection = total_connection/no_users
 no_of_friends_byid = [(user["id"],no_of_friends(user))for user in users]
 print(no_of_friends_byid)
-a = sorted(no_of_friends_byid,
-        key = lambda (user_id:num_frd):num_frd,
-        reverse=True)
+# a = sorted(no_of_friends_byid,
+#         key = lambda (user_id:num_frd):num_frd,
+#         reverse=True)
 
 def friends_of_friend_bad(user):
     return [foaf["id"]
@@ -49,6 +49,11 @@ def not_same(user,other_user):
 
 def not_friend(user,other_user):
     return all(not_same(friend,other_user)
-               for friend in user)
+               for friend in user["friends"])
 def friend_of_friend_id(user):
-    return Counter()
+    return Counter(foaf["id"]
+                   for friend in user["friends"]
+                   for foaf in friend["friends"]
+                   if not_same(user,foaf) and not_friend(user,foaf)
+                   )
+print(friend_of_friend_id(users[3]))
